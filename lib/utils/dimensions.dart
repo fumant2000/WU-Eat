@@ -38,8 +38,8 @@ static double width10=ScreenHeight/72.1;
 
    //listview size
 
-   static double listViewImgSize= ScreenWidth/5;
-   static double listViewTextSize= ScreenWidth/5;
+   static double listViewImgSize= ScreenWidth/4;
+   static double listViewTextSize= ScreenWidth/4;
 
    //popular food size
    static double popularFoodImgSize = ScreenHeight/1.85;

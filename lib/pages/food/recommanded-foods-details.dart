@@ -1,17 +1,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tmchat/controllers/recommended-product-controller.dart';
+import 'package:tmchat/routes/routes-helper.dart';
+import 'package:tmchat/utils/app-constants.dart';
 import 'package:tmchat/utils/colors.dart';
 import 'package:tmchat/utils/dimensions.dart';
 import 'package:tmchat/widgets/app-icon.dart';
 import 'package:tmchat/widgets/big-text.dart';
 import 'package:tmchat/widgets/expandable-text.dart';
 
-class RecommandedFoods extends StatelessWidget {
-  const RecommandedFoods({ Key? key }) : super(key: key);
+class RecommendedFoodsPage extends StatelessWidget {
+  int pageId;
+ RecommendedFoodsPage({ Key? key , required this.pageId }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product= Get.find<RecommendedProductController>().recommendedProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
 body: CustomScrollView(
@@ -22,9 +27,9 @@ body: CustomScrollView(
       title:Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InkWell(
+               GestureDetector(
                   onTap: (){
-                    Get.back();
+                    Get.toNamed(RouteHelper.initial);
                   },
                   child: AppIcon(
                   icon: Icons.clear,
@@ -47,14 +52,15 @@ body: CustomScrollView(
           padding: EdgeInsets.only(top:5, bottom: 10),
         
           width: double.maxFinite,
-          child: Center(child: BigText(text: 'Ndole', size: Dimensions.font26, color: AppColors.titleColor,),)
+          child: Center(child: BigText(text: product.name!, size: Dimensions.font26, color: AppColors.titleColor,),)
         )
         ,),
       //pinned: true,
       backgroundColor: AppColors.yellowColor,
       expandedHeight: 300,
       flexibleSpace: FlexibleSpaceBar(
-        background: Image.asset('assets/images/ndole.jpg',
+        background: Image.network(AppConstants.BASE_URL+AppConstants.UPLOAD_URL+product.img!,
+          //'assets/images/ndole.jpg',
         width: double.maxFinite,
         fit: BoxFit.cover,
         ) ,
@@ -65,7 +71,7 @@ body: CustomScrollView(
      child: Column(children: [
       Container(
         margin: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width20),
-        child: ExpandableTextWidget(text: 'le pouletppowdsbfhdbvhjcbdacvdhcdhvcjihdbvhjjhbdjvfneffiorjennekfkmnreiofverjkfmeirhjiferjnfvkdrnjriefkvnfrkjfvigrk est uen denrre siqjjnkwbdjbedjknediocnemw ncenhfv hcebkdnewklfbhrefvjcnbedkwcmlemcfelwbfcjewfkcned,cf emfbrjkenk',),
+        child: ExpandableTextWidget(text: product.description!,),
       )
      ],),
     )
@@ -88,7 +94,7 @@ bottomNavigationBar: Column(
         color: Colors.white,
         backgrounColor: AppColors.mainColor,
           icon: Icons.remove),
-          BigText(text: '\$12.88 ' + ' x ' + ' 0 ', color: AppColors.mainBlackColor, size: Dimensions.font17,),
+          BigText(text: '\$ ${product.price!} ' + ' x ' + ' 0 ', color: AppColors.mainBlackColor, size: Dimensions.font17,),
          AppIcon(
           iconSize: Dimensions.iconSize24,
         color: Colors.white,
@@ -129,7 +135,7 @@ bottomNavigationBar: Column(
           color: AppColors.mainColor,
        borderRadius: BorderRadius.circular(Dimensions.radius20)
         ),
-        child:BigText(text:'\$100 | Add to card')
+        child:BigText(text:'\$100 | Add to card', size: Dimensions.font17,)
           ),
            
         ],),

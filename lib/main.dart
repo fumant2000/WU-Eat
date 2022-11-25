@@ -7,6 +7,9 @@ import 'package:tmchat/pages/Home/main-foods-page.dart';
 import 'package:tmchat/pages/food/popular-food-details.dart';
 import 'package:tmchat/helper/dependencies.dart' as dep;
 import 'package:tmchat/pages/home/foods-page-body.dart';
+import 'package:tmchat/routes/routes-helper.dart';
+
+import 'controllers/recommended-product-controller.dart';
 //import 'package:get/get.dart';
 const dGreen= Color(0xFF2ac0a6);
 const dWhite= Colors.white;
@@ -22,13 +25,13 @@ class MyApp extends StatelessWidget {
   
   Widget build(BuildContext context) {
     Get.find<PopularProductController>().getPopularProductList();
+     Get.find<RecommendedProductController>().getRecommendedProductList();
     return GetMaterialApp(
       title: 'PubX_mobile',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+     initialRoute: RouteHelper.initial,
       home: MainFoodsPage(),
+      getPages: RouteHelper.routes,
       //MainFoodsPage(),
       //PopularFoodsPage() 
       //MainFoodsPage(),

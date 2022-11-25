@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tmchat/controllers/popular-product-controller.dart';
+import 'package:tmchat/pages/home/main-foods-page.dart';
+import 'package:tmchat/utils/app-constants.dart';
 import 'package:tmchat/utils/colors.dart';
 import 'package:tmchat/utils/dimensions.dart';
 import 'package:tmchat/widgets/app-column.dart';
@@ -10,10 +13,15 @@ import 'package:tmchat/widgets/icon-and-text-widget.dart';
 import 'package:tmchat/widgets/small-text.dart';
 
 class PopularFoodsPage extends StatelessWidget {
-  const PopularFoodsPage({Key? key}) : super(key: key);
+  int pageId;
+   PopularFoodsPage({Key? key, required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product = Get.find<PopularProductController>().popularProductList[pageId];
+    Get.find<PopularProductController>().initProduct();
+    print('page is '+ pageId.toString());
+    print('product name is '+ product.name.toString());
     return Scaffold(
       body: Stack(
         children: [
@@ -26,7 +34,11 @@ class PopularFoodsPage extends StatelessWidget {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('assets/images/taro.png'))),
+                        image: NetworkImage(
+                          AppConstants.BASE_URL+AppConstants.UPLOAD_URL+product.img!
+                        )
+                        //AssetImage('assets/images/taro.png')
+                        )),
               )),
           Positioned(
             top: Dimensions.height40,
@@ -35,9 +47,9 @@ class PopularFoodsPage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                InkWell(
+                GestureDetector(
                   onTap: (){
-                    Get.back();
+                    Get.to(()=>MainFoodsPage());
                   },
                   child: AppIcon(
                   icon: Icons.arrow_back_ios,
@@ -65,10 +77,10 @@ class PopularFoodsPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  AppColumn(text: 'Le Taro a la  sauce jaune', ),
+                  AppColumn(text: product.name!, ),
                 SizedBox(height: Dimensions.height20,),
                   BigText(text: 'Introduce'),
-                    Expanded(child: SingleChildScrollView(child: ExpandableTextWidget(text: 'le pouletppowdsbfhdbvhjcbdacvdhcdhvcjihdbvhjjhbdjvfneffiorjennekfkmnreiofverjkfmeirhjiferjnfvkdrnjriefkvnfrkjfvigrk est uen denrre siqjjnkwbdjbedjknediocnemw ncenhfv hcebkdnewklfbhrefvjcnbedkwcmlemcfelwbfcjewfkcned,cf emfbrjkenk'),))
+                    Expanded(child: SingleChildScrollView(child: ExpandableTextWidget(text: product.description!),))
                 ],
               )
             )
@@ -76,7 +88,8 @@ class PopularFoodsPage extends StatelessWidget {
       
         ],
       ),
-      bottomNavigationBar: Container(
+      bottomNavigationBar: GetBuilder<PopularProductController>(builder: (populaProduct) {
+        return Container(
         height: Dimensions.bottomHeightBar,
         padding: EdgeInsets.only(top: Dimensions.height20, bottom:Dimensions.height20, left: Dimensions.width20, right: Dimensions.width20),
         decoration: BoxDecoration(
@@ -98,11 +111,21 @@ class PopularFoodsPage extends StatelessWidget {
         child: Row(
 
           children: [
-          Icon(Icons.remove, color: AppColors.signColor,),
+          GestureDetector(
+          onTap:(){
+            populaProduct.setQuantity(false);
+          },
+          child:  Icon(Icons.remove, color: AppColors.signColor, size: Dimensions.font17,),
+         ),
           SizedBox(width: Dimensions.width10,),
-          BigText(text: '0', color:AppColors.signColor ,),
+          BigText(text: populaProduct.quantity.toString(), color:AppColors.signColor , size: Dimensions.font17,),
           SizedBox(width: Dimensions.width10,),
-          Icon(Icons.add, color: AppColors.signColor,),
+         GestureDetector(
+          onTap:(){
+            populaProduct.setQuantity(true);
+          },
+          child:  Icon(Icons.add, color: AppColors.signColor, size: Dimensions.font17,),
+         )
         ],),
           ),
            
@@ -112,11 +135,14 @@ class PopularFoodsPage extends StatelessWidget {
           color: AppColors.mainColor,
        borderRadius: BorderRadius.circular(Dimensions.radius20)
         ),
-        child:BigText(text:'\$100 | Add to card')
+        child:BigText(text:'\$ ${product.price!}|Add to card',size: Dimensions.font17,)
           ),
            
         ],),
-      ),
+      );
+    
+        
+      },)
     );
   }
 }
