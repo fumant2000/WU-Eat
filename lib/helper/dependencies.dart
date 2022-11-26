@@ -22,10 +22,9 @@ Get.lazyPut(()=>CartRepo());
 
 
 //Controller
-
+Get.lazyPut(()=>CartController(cartRepo: Get.find()));
 Get.lazyPut(()=>PopularProductController(popularProductRepo: Get.find()));
 Get.lazyPut(()=>RecommendedProductController(recommendedProductRepo: Get.find()));
-Get.lazyPut(()=>CartController(cartRepo: Get.find()));
 
 
 }

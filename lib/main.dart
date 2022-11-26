@@ -4,6 +4,7 @@ import 'package:tmchat/controllers/popular-product-controller.dart';
 import 'package:tmchat/data/repository/popular-product-repo.dart';
 
 import 'package:tmchat/pages/Home/main-foods-page.dart';
+import 'package:tmchat/pages/cart/cart-page.dart';
 import 'package:tmchat/pages/food/popular-food-details.dart';
 import 'package:tmchat/helper/dependencies.dart' as dep;
 import 'package:tmchat/pages/home/foods-page-body.dart';
