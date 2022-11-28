@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'PubX_mobile',
       debugShowCheckedModeBanner: false,
-     initialRoute: RouteHelper.initial,
-      home: MainFoodsPage(),
+     initialRoute: RouteHelper.getInitial(),
+      //home: MainFoodsPage(),
       getPages: RouteHelper.routes,
       //MainFoodsPage(),
       //PopularFoodsPage() 

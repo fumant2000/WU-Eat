@@ -1,5 +1,7 @@
 
-  class CartModel {
+  import 'package:tmchat/models/products-models.dart';
+
+class CartModel {
   int? id;
   String? name;
   int? price;
@@ -7,6 +9,7 @@
   int? quantity;
   bool? isExist;
   String? time;
+  ProductModel? product;
   CartModel(
       {this.id,
       this.name,
@@ -14,7 +17,8 @@
       this.img,
       this.isExist,
       this.time,
-      this.quantity
+      this.quantity,
+      this.product
       });
 
   CartModel.fromJson(Map<String, dynamic> json) {
@@ -25,6 +29,7 @@
     quantity = json['quantity'];
     isExist = json['isExist'];
     time = json['time'];
+    product= ProductModel.fromJson(json['product']);
   }
 
  

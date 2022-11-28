@@ -27,6 +27,7 @@ if(_items.containsKey(product.id!)){
     quantity: value.quantity! + quantity,
     isExist: true,
     time: DateTime.now().toString(),
+    product: product
   );
   });
 
@@ -54,6 +55,7 @@ if(_items.containsKey(product.id!)){
     quantity: quantity,
     isExist: true,
     time: DateTime.now().toString(),
+    product: product,
   );});
  }else{
    Get.snackbar('Item Count', 'You should at lis at item in the card',
@@ -64,11 +66,11 @@ if(_items.containsKey(product.id!)){
  }
 
 }
-
+update();
  
 }
  
- existInCart(ProductModel product){
+ bool existInCart(ProductModel product){
 
   if (_items.containsKey(product.id)){
     return true;
@@ -105,4 +107,14 @@ List<CartModel> get getItems{
   }).toList();
 }
 
+int get totalAmount{
+  var total= 0;
+  _items.forEach((key, value) {
+    
+    total += value.quantity! * value.price!;
+  });
+
+  return total;
+
+}
 }

@@ -4,6 +4,7 @@ import 'package:tmchat/controllers/cart-controller.dart';
 import 'package:tmchat/controllers/popular-product-controller.dart';
 import 'package:tmchat/pages/cart/cart-page.dart';
 import 'package:tmchat/pages/home/main-foods-page.dart';
+import 'package:tmchat/routes/routes-helper.dart';
 import 'package:tmchat/utils/app-constants.dart';
 import 'package:tmchat/utils/colors.dart';
 import 'package:tmchat/utils/dimensions.dart';
@@ -16,7 +17,8 @@ import 'package:tmchat/widgets/small-text.dart';
 
 class PopularFoodsPage extends StatelessWidget {
   int pageId;
-  PopularFoodsPage({Key? key, required this.pageId}) : super(key: key);
+  final String page;
+  PopularFoodsPage({Key? key, required this.pageId, required this.page}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -53,36 +55,46 @@ class PopularFoodsPage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.to(() => MainFoodsPage());
+                      if(page=='cartpage'){
+                        Get.toNamed(RouteHelper.getCartPage());
+                      }else{
+                        Get.toNamed(RouteHelper.getInitial());
+                      }
+                    
                     },
                     child: AppIcon(
                       icon: Icons.arrow_back_ios,
                     ),
                   ),
                   GetBuilder<PopularProductController>(builder: (controller) {
-                    return Stack(children: [
-                      AppIcon(
-                        icon: Icons.shopping_cart_outlined,
-                      ),
-                      Get.find<PopularProductController>().totalItems>=1? Positioned(
-                        right: 0,top: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            Get.to(()=>CartPage());
-                          },
-                          child: AppIcon(
-                            icon: Icons.circle, size: 20,
-                            color: Colors.transparent, backgrounColor: AppColors.mainColor,
+                    return GestureDetector(
+                      onTap: () {
+                        if(controller.totalItems>=1)
+                              Get.toNamed(RouteHelper.getCartPage());
+                            },
+                      child: Stack(children: [
+                        AppIcon(
+                          icon: Icons.shopping_cart_outlined,
+                        ),
+                       controller.totalItems>=1? Positioned(
+                          right: 0,top: 0,
+                       
+                            
+                            child: AppIcon(
+                              icon: Icons.circle, size: 20,
+                              color: Colors.transparent, backgrounColor: AppColors.mainColor,
+                          
                           )
-                        )
-                      ):Container(),
-                      Get.find<PopularProductController>().totalItems>=1? Positioned(
-                        right: 4,top: 4,
-                        child: BigText(text: Get.find<PopularProductController>().totalItems.toString(),
-                        color: Colors.white, size: 12,
-                        )
-                      ):Container(),
-                    ]);
+                        ):Container(),
+                        Get.find<PopularProductController>().totalItems>=1? Positioned(
+                          right: 4,top: 4,
+                          child: BigText(text: Get.find<PopularProductController>().totalItems.toString(),
+                          color: Colors.white, size: 12,
+                          )
+                        ):Container(),
+                      ])
+                                     
+                    );
                   }), 
                 
                 ],
@@ -210,6 +222,9 @@ class PopularFoodsPage extends StatelessWidget {
               ),
             );
           },
-        ));
+        )
+       
+        );
+ 
   }
 }

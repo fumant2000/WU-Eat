@@ -41,6 +41,7 @@ class _FoodsPageBodyState extends State<FoodsPageBody> {
   @override
   void dispose() {
     pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -132,10 +133,11 @@ class _FoodsPageBodyState extends State<FoodsPageBody> {
                   itemBuilder: (context, index) {
                     return  GestureDetector(
                     onTap: (){
-                      Get.toNamed(RouteHelper.getRecommendedFood(index));
+                      Get.toNamed(RouteHelper.getRecommendedFood(index, 'home'));
                     },
                        child:
                     Container(
+                      color: Colors.white,
                       margin: EdgeInsets.only(
                           right: Dimensions.width10,
                           left: Dimensions.width10,
@@ -165,6 +167,7 @@ class _FoodsPageBodyState extends State<FoodsPageBody> {
                           
                           Expanded(
                             child: Container(
+                               height: Dimensions.listViewImgSize,
                                 //height: Dimensions.listViewTextSize,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.only(
@@ -181,7 +184,7 @@ class _FoodsPageBodyState extends State<FoodsPageBody> {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       BigText(
                                           text: recommendedProduct
@@ -259,7 +262,7 @@ class _FoodsPageBodyState extends State<FoodsPageBody> {
         children: [
          GestureDetector(
                     onTap: (){
-                      Get.toNamed(RouteHelper.getPopularFood(index));
+                      Get.toNamed(RouteHelper.getPopularFood(index, 'home'));
                     },
           child: Container(
               height: Dimensions.pageViewContainer,
