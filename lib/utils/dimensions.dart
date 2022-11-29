@@ -47,4 +47,6 @@ static double width10=ScreenHeight/72.1;
    //bottom height Bar
    static double bottomHeightBar= ScreenHeight/7;
 
+   static double splashImg = ScreenHeight/2.872;
+
 }

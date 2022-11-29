@@ -66,6 +66,7 @@ if(_items.containsKey(product.id!)){
  }
 
 }
+cartRepo.addToCartList(getItems);
 update();
  
 }
@@ -117,4 +118,6 @@ int get totalAmount{
   return total;
 
 }
+
+
 }

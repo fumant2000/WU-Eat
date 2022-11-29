@@ -8,6 +8,7 @@ import 'package:tmchat/pages/cart/cart-page.dart';
 import 'package:tmchat/pages/food/popular-food-details.dart';
 import 'package:tmchat/helper/dependencies.dart' as dep;
 import 'package:tmchat/pages/home/foods-page-body.dart';
+import 'package:tmchat/pages/splash/splash-page.dart';
 import 'package:tmchat/routes/routes-helper.dart';
 
 import 'controllers/recommended-product-controller.dart';
@@ -25,18 +26,22 @@ class MyApp extends StatelessWidget {
   @override
   
   Widget build(BuildContext context) {
-    Get.find<PopularProductController>().getPopularProductList();
-     Get.find<RecommendedProductController>().getRecommendedProductList();
-    return GetMaterialApp(
+    return GetBuilder<PopularProductController>(builder: (_){
+      return GetBuilder<RecommendedProductController>(builder: (_){
+         return GetMaterialApp(
       title: 'PubX_mobile',
       debugShowCheckedModeBanner: false,
-     initialRoute: RouteHelper.getInitial(),
-      //home: MainFoodsPage(),
+     initialRoute: RouteHelper.getSplashPage(),
+      //home: SplashScreen(),
       getPages: RouteHelper.routes,
       //MainFoodsPage(),
       //PopularFoodsPage() 
       //MainFoodsPage(),
     );
+      });
+    });
+   
+   
   }
 }
 
